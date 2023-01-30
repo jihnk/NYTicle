@@ -1,10 +1,9 @@
-//temp: any null 수정 필요
 interface Person {
 	firstname: string;
-	middlename: string;
+	middlename: string | null;
 	lastname: string;
-	qualifier: string;
-	title: string;
+	qualifier: string | null;
+	title: string | null;
 	role: string;
 	organization: string;
 	rank: number;
@@ -31,6 +30,7 @@ interface ArticleType {
 	document_type: string;
 	news_desk: string;
 	section_name: string;
+	subsection_name?: string;
 	byline: {
 		original: string | null;
 		person: Person[];
