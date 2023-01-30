@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import Scrap from "./pages/Scrap";
 import "./styles/globals.css";
+import "react-datepicker/dist/react-datepicker.css";
 
 function App() {
 	return (
