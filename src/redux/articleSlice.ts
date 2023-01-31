@@ -1,17 +1,28 @@
 import { getArticleList } from "../api/article";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
 
 export const getArticles = createAsyncThunk(
 	"articles/getArticles",
-	async ({ page }: any) => {
-		const response = await getArticleList({ page });
-		return response.data.response.docs;
+	async ({ page }: any, thunkAPI) => {
+		try {
+			const result = await getArticleList({ page });
+			return result.response;
+		} catch (err) {
+			if (err instanceof AxiosError) {
+				const message =
+					(err.response && err.response.data && err.response.data.message) ||
+					err.message ||
+					err.toString();
+				return thunkAPI.rejectWithValue(message);
+			}
+		}
 	}
 );
 
 export const articleSlice = createSlice({
 	name: "articles",
-	initialState: { articleList: [], loading: "idle" },
+	initialState: { articleList: [], loading: "idle", listCount: 0 },
 	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(getArticles.pending, (state) => {
@@ -19,7 +30,8 @@ export const articleSlice = createSlice({
 		});
 		builder.addCase(getArticles.fulfilled, (state, action) => {
 			state.loading = "succeed";
-			state.articleList = action.payload;
+			state.articleList = [...state.articleList].concat(action.payload.docs);
+			state.listCount = action.payload.meta.hits;
 		});
 		builder.addCase(getArticles.rejected, (state, action) => {
 			state.loading = "failed";
