@@ -51,13 +51,13 @@ const Article = ({ article }: ArticleProp) => {
 					</button>
 				</div>
 				<div className="flex justify-between text-sm">
-					<div className="flex gap-2">
-						<p>{source}</p>
+					<div className="flex">
+						<span className="flex-none">{source}</span>
 						{byline.person.length > 0 && (
-							<p>{`${byline.person[0].firstname} 기자`}</p>
+							<span className="flex-none ml-2">{`${byline.person[0].firstname} 기자`}</span>
 						)}
 					</div>
-					<p className="text-unactive">
+					<p className="flex-none text-unactive">
 						{moment(formattedDate).format("YYYY.M.DD. (dd)")}
 					</p>
 				</div>
