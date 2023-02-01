@@ -31,7 +31,8 @@ const Main = () => {
 			entry.isIntersecting &&
 			!isLoading &&
 			listCount >= articleList.length &&
-			loading === "succeed"
+			loading !== "failed" &&
+			loading !== "pending"
 		) {
 			observer.unobserve(entry.target);
 			setIsLoading(true);
