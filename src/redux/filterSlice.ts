@@ -45,7 +45,6 @@ export const filterSlice = createSlice({
 				: state.scrap.country.push(action.payload);
 		},
 		reset: (state) => {
-			// state.scrap = { ...state.scrap, headline: "", pub_date: "", country: [] };
 			state.scrap = initialState.scrap;
 		},
 	},

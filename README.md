@@ -1,46 +1,85 @@
-# Getting Started with Create React App
+### 사용 기술
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- react
+- typescript
+- redux toolkit (+ redux-persist)
+- axios
+- tailwindcss
+- moment
+- react-datepicker
 
-## Available Scripts
+### 실행 방법
 
-In the project directory, you can run:
+      npm i && npm start
 
-### `npm start`
+### 파일 구조
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+src
+┣ api
+┃ ┗ article.ts
+┣ assets
+┃ ┣ calendar.svg
+┃ ┣ home.svg
+┃ ┣ scrap.svg
+┃ ┣ search.svg
+┃ ┣ star-fill.svg
+┃ ┗ star.svg
+┣ components
+┃ ┣ article
+┃ ┃ ┣ Article.tsx
+┃ ┃ ┗ ArticleList.tsx
+┃ ┣ common
+┃ ┃ ┣ Button.tsx
+┃ ┃ ┣ Filter.tsx
+┃ ┃ ┣ FilterModal.tsx
+┃ ┃ ┣ Nav.tsx
+┃ ┃ ┣ Portal.tsx
+┃ ┃ ┗ Spinner.tsx
+┃ ┣ Country.tsx
+┃ ┗ NoData.tsx
+┣ hooks
+┃ ┣ useInfiniteScroll.ts
+┃ ┗ useModal.ts
+┣ pages
+┃ ┣ Main.tsx
+┃ ┗ Scrap.tsx
+┣ redux
+┃ ┣ articleSlice.ts
+┃ ┣ filterSlice.ts
+┃ ┣ likeItemSlice.ts
+┃ ┣ reducer.ts
+┃ ┗ store.ts
+┣ styles
+┃ ┗ globals.css
+┣ types
+┃ ┣ article.ts
+┃ ┣ filter.ts
+┃ ┗ store.ts
+┣ App.test.tsx
+┣ App.tsx
+┣ const.ts
+┣ index.tsx
+┣ react-app-env.d.ts
+┣ reportWebVitals.ts
+┣ setupTests.ts
+┗ utils.ts
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 구현 내용
 
-### `npm test`
+- 홈 화면
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  - [x] new york times의 api 호출
+  - [x] 무한 스크롤 적용 (intersection observer)
+  - [x] 필터 영역 클릭시 필터 모달 노출
+  - [x] 홈 headline, pub_date 필터링 적용 (api), 국가는 ui만 구현
+  - [x] 스크랩 추가/제거 기능 + alert 노출
+  - [x] 리스트 기사 클릭시 new york times의 기사 웹페이지로 리다이렉트
 
-### `npm run build`
+- 스크랩 화면
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+  - [x] 스크랩 제거 기능 + alert 노출
+  - [x] 스크랩 기사 없으면 no data 노출 +스크랩 하러 가기 버튼 클릭시 홈화면 이동
+  - [x] 필터링 된 no data에서 스크랩 하러 가기 버튼 클릭시 홈화면 이동 + 스크랩 필터만 reset
+  - [x] 스크랩 필터 headline, pub_date 필터링 적용(filter), 국가는 ui만 구현
+  - [x] 리스트 기사 클릭시 new york times의 기사 웹페이지로 리다이렉트
+  - [x] 웹을 껐다 켜도 스크랩된 데이터 유지 - redux persist
