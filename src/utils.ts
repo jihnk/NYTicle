@@ -8,8 +8,8 @@ export const removeItem = (arr: ArticleType[], index: number) => {
 export const getQueryParams = (obj: FilterType) => {
 	let returnQueryParams = [];
 	for (const key of Object.keys(obj)) {
-		if (obj[key]) {
-			returnQueryParams.push(key + ":" + obj[key]);
+		if (obj[key as keyof typeof obj].length && key !== "country") {
+			returnQueryParams.push(key + ":" + obj[key as keyof typeof obj]);
 		}
 	}
 

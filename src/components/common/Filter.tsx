@@ -1,7 +1,10 @@
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+
 import { ReactComponent as Calendar } from "../../assets/calendar.svg";
 import { ReactComponent as Search } from "../../assets/search.svg";
+import { BLUE_BUTTON, WHITE_BUTTON } from "../../const";
 import useModal from "../../hooks/useModal";
 import { Store } from "../../types/store";
 import FilterModal from "./FilterModal";
@@ -13,10 +16,18 @@ const Filter = () => {
 		return state.filter;
 	});
 	const [isOpenModal, handleModal] = useModal(false);
-	const isFilteredHeadline =
-		(isHome && main.headline) || (!isHome && scrap.headline);
-	const isFilteredDate =
-		(isHome && main.pub_date) || (!isHome && scrap.pub_date);
+	const isFilteredHeadline = useMemo(
+		() => (isHome && main.headline) || (!isHome && scrap.headline),
+		[isHome, main.headline, scrap.headline]
+	);
+	const isFilteredDate = useMemo(
+		() => (isHome && main.pub_date) || (!isHome && scrap.pub_date),
+		[isHome, main.pub_date, scrap.pub_date]
+	);
+	const isFilteredCountry = useMemo(
+		() => (isHome && main.country.length) || (!isHome && scrap.country.length),
+		[isHome, main.country.length, scrap.country.length]
+	);
 
 	return (
 		<>
@@ -24,13 +35,7 @@ const Filter = () => {
 				className="flex items-center h-[60px] px-5 gap-2 bg-white"
 				onClick={handleModal}
 			>
-				<button
-					className={
-						isFilteredHeadline
-							? "flex justify-center items-center h-fit border border-blue rounded-xl gap-1 px-2"
-							: "flex justify-center items-center h-fit border border-gray rounded-xl gap-1 px-2"
-					}
-				>
+				<button className={isFilteredHeadline ? BLUE_BUTTON : WHITE_BUTTON}>
 					<Search fill={isFilteredHeadline ? "#3478F6" : "#6D6D6D"} />
 					<p
 						className={
@@ -48,13 +53,7 @@ const Filter = () => {
 							: "전체 헤드라인"}
 					</p>
 				</button>
-				<button
-					className={
-						isFilteredDate
-							? "flex justify-center items-center h-fit border border-blue rounded-xl gap-1 px-2"
-							: "flex justify-center items-center h-fit border border-gray rounded-xl gap-1 px-2"
-					}
-				>
+				<button className={isFilteredDate ? BLUE_BUTTON : WHITE_BUTTON}>
 					<Calendar fill={isFilteredDate ? "#3478F6" : "#6D6D6D"} />
 					<p
 						className={
@@ -70,10 +69,22 @@ const Filter = () => {
 							: "전체 날짜"}
 					</p>
 				</button>
-				<button
-					className={`flex justify-center items-center h-fit border border-gray rounded-xl gap-1 px-2`}
-				>
-					<p className="text-md text-unactive">전체 국가</p>
+				<button className={isFilteredCountry ? BLUE_BUTTON : WHITE_BUTTON}>
+					<p
+						className={
+							isFilteredCountry ? "text-md text-blue" : "text-md text-unactive"
+						}
+					>
+						{isFilteredCountry
+							? isHome
+								? main.country.length === 1
+									? main.country[0]
+									: `${main.country[0]} 외 ${main.country.length - 1}개`
+								: scrap.country.length === 1
+								? scrap.country[0]
+								: `${scrap.country[0]} 외 ${scrap.country.length - 1}개`
+							: `전체 국가`}
+					</p>
 				</button>
 			</section>
 			{isOpenModal && <FilterModal handleClose={handleModal} />}

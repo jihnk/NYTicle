@@ -1,7 +1,7 @@
 interface FilterType {
 	headline: string;
 	pub_date: string;
-	[key: string]: string;
+	country: string[];
 }
 
 export type { FilterType };

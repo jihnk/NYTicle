@@ -32,7 +32,6 @@ const Scrap = () => {
 			) : (
 				<NoData />
 			)}
-
 			<Nav />
 		</>
 	);
