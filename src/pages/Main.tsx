@@ -8,6 +8,7 @@ import useIntersectionObserver from "../hooks/useInfiniteScroll";
 import { getArticles } from "../redux/articleSlice";
 import { AppDispatch } from "../redux/store";
 import { Store } from "../types/store";
+import { getQueryParams } from "../utils";
 
 const Main = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -18,6 +19,10 @@ const Main = () => {
 		return state.article;
 	});
 
+	const { main } = useSelector((state: Store) => {
+		return state.filter;
+	});
+
 	const onIntersect: IntersectionObserverCallback = async (
 		[entry],
 		observer
@@ -25,7 +30,7 @@ const Main = () => {
 		if (entry.isIntersecting && !isLoading && listCount >= articleList.length) {
 			observer.unobserve(entry.target);
 			setIsLoading(true);
-			await dispatch(getArticles({ page }));
+			await dispatch(getArticles({ page, fq: getQueryParams(main) }));
 			setIsLoading(false);
 			setPage(page + 1);
 			observer.observe(entry.target);

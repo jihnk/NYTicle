@@ -63,10 +63,10 @@ const Filter = () => {
 					>
 						{isHome
 							? main.pub_date
-								? main.pub_date
+								? main.pub_date.replaceAll("-", ".")
 								: "전체 날짜"
 							: scrap.pub_date
-							? scrap.pub_date
+							? scrap.pub_date.replaceAll("-", ".")
 							: "전체 날짜"}
 					</p>
 				</button>

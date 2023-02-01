@@ -16,10 +16,12 @@ import {
 	editScrapHeadline,
 } from "../../redux/filterSlice";
 import { Store } from "../../types/store";
-import { getArticles } from "../../redux/articleSlice";
+import { getArticles, reset } from "../../redux/articleSlice";
+import { AppDispatch } from "../../redux/store";
+import { getQueryParams } from "../../utils";
 
 const FilterModal = ({ handleClose }: { handleClose: () => void }) => {
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<AppDispatch>();
 	const location = useLocation();
 
 	const isHome = location.pathname === "/";
@@ -35,13 +37,21 @@ const FilterModal = ({ handleClose }: { handleClose: () => void }) => {
 
 	const onChangeDate = (date: Date) => {
 		isHome
-			? dispatch(editMainDate(moment(date).format("YYYY.MM.DD")))
-			: dispatch(editScrapDate(moment(date).format("YYYY.MM.DD")));
+			? dispatch(editMainDate(moment(date).format("YYYY-MM-DD")))
+			: dispatch(editScrapDate(moment(date).format("YYYY-MM-DD")));
 	};
 
 	const onClick = () => {
-		//fetch
+		filterList();
 		handleClose();
+	};
+
+	const filterList = () => {
+		if (isHome) {
+			dispatch(reset());
+			dispatch(getArticles({ page: 1, fq: getQueryParams(main) }));
+		} else {
+		}
 	};
 
 	return (
@@ -66,10 +76,10 @@ const FilterModal = ({ handleClose }: { handleClose: () => void }) => {
 								selected={
 									isHome
 										? main.pub_date
-											? moment(main.pub_date.replaceAll(".", "-")).toDate()
+											? moment(main.pub_date.replaceAll("-", ".")).toDate()
 											: null
 										: scrap.pub_date
-										? moment(scrap.pub_date.replaceAll(".", "-")).toDate()
+										? moment(scrap.pub_date.replaceAll("-", ".")).toDate()
 										: null
 								}
 								onChange={onChangeDate}

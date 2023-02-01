@@ -4,9 +4,9 @@ import { AxiosError } from "axios";
 
 export const getArticles = createAsyncThunk(
 	"articles/getArticles",
-	async ({ page }: any, thunkAPI) => {
+	async ({ page, fq }: any, thunkAPI) => {
 		try {
-			const result = await getArticleList({ page });
+			const result = await getArticleList({ page, fq });
 			return result.response;
 		} catch (err) {
 			if (err instanceof AxiosError) {
@@ -20,10 +20,18 @@ export const getArticles = createAsyncThunk(
 	}
 );
 
+const initialState = {
+	articleList: [],
+	loading: "idle",
+	listCount: 0,
+};
+
 export const articleSlice = createSlice({
 	name: "articles",
-	initialState: { articleList: [], loading: "idle", listCount: 0 },
-	reducers: {},
+	initialState,
+	reducers: {
+		reset: () => initialState,
+	},
 	extraReducers: (builder) => {
 		builder.addCase(getArticles.pending, (state) => {
 			state.loading = "pending";
@@ -33,10 +41,12 @@ export const articleSlice = createSlice({
 			state.articleList = [...state.articleList].concat(action.payload.docs);
 			state.listCount = action.payload.meta.hits;
 		});
-		builder.addCase(getArticles.rejected, (state, action) => {
+		builder.addCase(getArticles.rejected, (state) => {
 			state.loading = "failed";
 		});
 	},
 });
+
+export const { reset } = articleSlice.actions;
 
 export default articleSlice.reducer;

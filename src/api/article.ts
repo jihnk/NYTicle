@@ -9,13 +9,15 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 
 interface fetchType {
 	page: MutableRefObject<number>;
+	fq: string;
 }
 
-export const getArticleList = async ({ page }: fetchType) => {
+export const getArticleList = async ({ page, fq }: fetchType) => {
 	try {
 		const response = await instance.get(`/`, {
 			params: {
 				page,
+				fq,
 				"api-key": API_KEY,
 			},
 		});
