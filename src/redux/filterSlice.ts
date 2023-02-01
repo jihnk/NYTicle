@@ -25,10 +25,11 @@ export const filterSlice = createSlice({
 			state.main = { ...state.main, pub_date: action.payload };
 		},
 		editMainCountry: (state, action) => {
-			const newItem = action.payload;
-			state.main.country.includes(newItem)
-				? state.main.country.filter((country) => country !== newItem)
-				: state.main.country.push(newItem);
+			state.main.country.includes(action.payload)
+				? (state.scrap.country = state.main.country.filter(
+						(country) => country !== action.payload
+				  ))
+				: state.main.country.push(action.payload);
 		},
 		editScrapHeadline: (state, action) => {
 			state.scrap = { ...state.scrap, headline: action.payload };
@@ -37,13 +38,10 @@ export const filterSlice = createSlice({
 			state.scrap = { ...state.scrap, pub_date: action.payload };
 		},
 		editScrapCountry: (state, action) => {
-			console.log(state);
 			state.scrap.country.includes(action.payload)
-				? (state.scrap.country = [
-						...state.scrap.country.filter(
-							(country) => country !== action.payload
-						),
-				  ])
+				? (state.scrap.country = state.scrap.country.filter(
+						(country) => country !== action.payload
+				  ))
 				: state.scrap.country.push(action.payload);
 			console.log(state.scrap);
 		},
