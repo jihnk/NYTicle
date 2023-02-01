@@ -14,55 +14,58 @@
 
 ### 파일 구조
 
-src
-┣ api
-┃ ┗ article.ts
-┣ assets
-┃ ┣ calendar.svg
-┃ ┣ home.svg
-┃ ┣ scrap.svg
-┃ ┣ search.svg
-┃ ┣ star-fill.svg
-┃ ┗ star.svg
-┣ components
-┃ ┣ article
-┃ ┃ ┣ Article.tsx
-┃ ┃ ┗ ArticleList.tsx
-┃ ┣ common
-┃ ┃ ┣ Button.tsx
-┃ ┃ ┣ Filter.tsx
-┃ ┃ ┣ FilterModal.tsx
-┃ ┃ ┣ Nav.tsx
-┃ ┃ ┣ Portal.tsx
-┃ ┃ ┗ Spinner.tsx
-┃ ┣ Country.tsx
-┃ ┗ NoData.tsx
-┣ hooks
-┃ ┣ useInfiniteScroll.ts
-┃ ┗ useModal.ts
-┣ pages
-┃ ┣ Main.tsx
-┃ ┗ Scrap.tsx
-┣ redux
-┃ ┣ articleSlice.ts
-┃ ┣ filterSlice.ts
-┃ ┣ likeItemSlice.ts
-┃ ┣ reducer.ts
-┃ ┗ store.ts
-┣ styles
-┃ ┗ globals.css
-┣ types
-┃ ┣ article.ts
-┃ ┣ filter.ts
-┃ ┗ store.ts
-┣ App.test.tsx
-┣ App.tsx
-┣ const.ts
-┣ index.tsx
-┣ react-app-env.d.ts
-┣ reportWebVitals.ts
-┣ setupTests.ts
-┗ utils.ts
+.
+├── App.test.tsx
+├── App.tsx
+├── api
+│   └── article.ts
+├── assets
+│   ├── calendar.svg
+│   ├── home.svg
+│   ├── scrap.svg
+│   ├── search.svg
+│   ├── star-fill.svg
+│   └── star.svg
+├── components
+│   ├── Country.tsx
+│   ├── NoData.tsx
+│   ├── article
+│   │   ├── Article.tsx
+│   │   └── ArticleList.tsx
+│   └── common
+│   ├── Button.tsx
+│   ├── Filter.tsx
+│   ├── FilterModal.tsx
+│   ├── Nav.tsx
+│   ├── Portal.tsx
+│   └── Spinner.tsx
+├── const.ts
+├── file.txt
+├── hooks
+│   ├── useInfiniteScroll.ts
+│   └── useModal.ts
+├── index.tsx
+├── pages
+│   ├── Main.tsx
+│   └── Scrap.tsx
+├── react-app-env.d.ts
+├── redux
+│   ├── articleSlice.ts
+│   ├── filterSlice.ts
+│   ├── likeItemSlice.ts
+│   ├── reducer.ts
+│   └── store.ts
+├── reportWebVitals.ts
+├── setupTests.ts
+├── styles
+│   └── globals.css
+├── types
+│   ├── article.ts
+│   ├── filter.ts
+│   └── store.ts
+└── utils.ts
+
+10 directories, 39 files
 
 ### 구현 내용
 
