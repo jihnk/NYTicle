@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 
 import like from "./likeItemSlice";
 import article from "./articleSlice";
+import filter from "./filterSlice";
 
 const persistConfig = {
 	key: "root",
@@ -14,6 +15,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
 	like,
 	article,
+	filter,
 });
 
 export default persistReducer(persistConfig, rootReducer);

@@ -14,7 +14,7 @@ const Main = () => {
 	const [page, setPage] = useState(1);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const { articleList, listCount } = useSelector((state: Store) => {
+	const { articleList, listCount, loading } = useSelector((state: Store) => {
 		return state.article;
 	});
 
@@ -40,8 +40,8 @@ const Main = () => {
 		<>
 			<Filter />
 			<ArticleList articleList={articleList} />
+			{loading === "pending" && <Spinner />}
 			{!isLoading && <div ref={setTarget} className="w-full h-[300px]"></div>}
-			{isLoading && <Spinner />}
 			<Nav />
 		</>
 	);

@@ -7,13 +7,11 @@ interface ArticleListProps {
 
 const ArticleList = ({ articleList }: ArticleListProps) => {
 	return (
-		<>
-			<ul className="flex flex-col p-5 gap-2">
-				{articleList.map((article) => (
-					<Article article={article} key={article._id} />
-				))}
-			</ul>
-		</>
+		<ul className="flex flex-col p-5 gap-2">
+			{articleList.map((article) => (
+				<Article article={article} key={article._id} />
+			))}
+		</ul>
 	);
 };
 export default ArticleList;

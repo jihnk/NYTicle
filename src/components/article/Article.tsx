@@ -30,35 +30,39 @@ const Article = ({ article }: ArticleProp) => {
 	};
 
 	return (
-		<a
-			href={web_url}
-			className="flex flex-col w-full px-5 py-[10px] rounded-[8px] bg-background gap-2"
-		>
-			<div className="flex justify-between">
-				<h1 className="text-lg line-clamp-2 font-semibold">{headline.main}</h1>
-				<button
-					className="flex justify-center items-center w-6 h-6"
-					onClick={onClick}
-				>
-					{isLiked ? (
-						<StarFill className="flex-none" />
-					) : (
-						<Star className="flex-none" />
-					)}
-				</button>
-			</div>
-			<div className="flex justify-between text-sm">
-				<div className="flex gap-2">
-					<p>{source}</p>
-					{byline.person.length > 0 && (
-						<p>{`${byline.person[0].firstname} 기자`}</p>
-					)}
+		<li>
+			<a
+				href={web_url}
+				className="flex flex-col w-full px-5 py-[10px] rounded-[8px] bg-background gap-2"
+			>
+				<div className="flex justify-between">
+					<h1 className="text-lg line-clamp-2 font-semibold">
+						{headline.main}
+					</h1>
+					<button
+						className="flex justify-center items-center w-6 h-6"
+						onClick={onClick}
+					>
+						{isLiked ? (
+							<StarFill className="flex-none" />
+						) : (
+							<Star className="flex-none" />
+						)}
+					</button>
 				</div>
-				<p className="text-unactive">
-					{moment(formattedDate).format("YYYY.M.DD. (dd)")}
-				</p>
-			</div>
-		</a>
+				<div className="flex justify-between text-sm">
+					<div className="flex gap-2">
+						<p>{source}</p>
+						{byline.person.length > 0 && (
+							<p>{`${byline.person[0].firstname} 기자`}</p>
+						)}
+					</div>
+					<p className="text-unactive">
+						{moment(formattedDate).format("YYYY.M.DD. (dd)")}
+					</p>
+				</div>
+			</a>
+		</li>
 	);
 };
 

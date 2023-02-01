@@ -1,4 +1,5 @@
 import { ArticleType } from "./article";
+import { FilterType } from "./filter";
 
 interface Store {
 	article: {
@@ -8,6 +9,10 @@ interface Store {
 	};
 	like: {
 		likeList: ArticleType[];
+	};
+	filter: {
+		main: FilterType;
+		scrap: FilterType;
 	};
 }
 
