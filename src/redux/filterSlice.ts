@@ -43,7 +43,10 @@ export const filterSlice = createSlice({
 						(country) => country !== action.payload
 				  ))
 				: state.scrap.country.push(action.payload);
-			console.log(state.scrap);
+		},
+		reset: (state) => {
+			// state.scrap = { ...state.scrap, headline: "", pub_date: "", country: [] };
+			state.scrap = initialState.scrap;
 		},
 	},
 });
@@ -55,6 +58,7 @@ export const {
 	editScrapHeadline,
 	editScrapDate,
 	editScrapCountry,
+	reset,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

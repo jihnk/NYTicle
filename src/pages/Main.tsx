@@ -27,7 +27,12 @@ const Main = () => {
 		[entry],
 		observer
 	) => {
-		if (entry.isIntersecting && !isLoading && listCount >= articleList.length) {
+		if (
+			entry.isIntersecting &&
+			!isLoading &&
+			listCount >= articleList.length &&
+			loading === "succeed"
+		) {
 			observer.unobserve(entry.target);
 			setIsLoading(true);
 			await dispatch(getArticles({ page, fq: getQueryParams(main) }));
