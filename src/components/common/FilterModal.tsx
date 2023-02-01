@@ -50,7 +50,6 @@ const FilterModal = ({ handleClose }: { handleClose: () => void }) => {
 		if (isHome) {
 			dispatch(reset());
 			dispatch(getArticles({ page: 1, fq: getQueryParams(main) }));
-		} else {
 		}
 	};
 
