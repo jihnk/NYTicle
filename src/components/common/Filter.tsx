@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 
 import { ReactComponent as Calendar } from "../../assets/calendar.svg";
 import { ReactComponent as Search } from "../../assets/search.svg";
-import { BLUE_BUTTON, WHITE_BUTTON } from "../../const";
 import useModal from "../../hooks/useModal";
 import { Store } from "../../types/store";
 import FilterModal from "./FilterModal";
@@ -35,13 +34,11 @@ const Filter = () => {
 				className="flex items-center h-[60px] px-5 gap-2 bg-white"
 				onClick={handleModal}
 			>
-				<button className={isFilteredHeadline ? BLUE_BUTTON : WHITE_BUTTON}>
+				<button className={isFilteredHeadline ? "btn-blue" : "btn-white"}>
 					<Search fill={isFilteredHeadline ? "#3478F6" : "#6D6D6D"} />
 					<p
 						className={
-							isFilteredHeadline
-								? "text-md text-blue "
-								: "text-md text-unactive"
+							isFilteredHeadline ? "text-md text-blue" : "text-md text-unactive"
 						}
 					>
 						{isHome
@@ -53,7 +50,7 @@ const Filter = () => {
 							: "전체 헤드라인"}
 					</p>
 				</button>
-				<button className={isFilteredDate ? BLUE_BUTTON : WHITE_BUTTON}>
+				<button className={isFilteredDate ? "btn-blue" : "btn-white"}>
 					<Calendar fill={isFilteredDate ? "#3478F6" : "#6D6D6D"} />
 					<p
 						className={
@@ -69,7 +66,7 @@ const Filter = () => {
 							: "전체 날짜"}
 					</p>
 				</button>
-				<button className={isFilteredCountry ? BLUE_BUTTON : WHITE_BUTTON}>
+				<button className={isFilteredCountry ? "btn-blue" : "btn-white"}>
 					<p
 						className={
 							isFilteredCountry ? "text-md text-blue" : "text-md text-unactive"

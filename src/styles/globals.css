@@ -7,3 +7,12 @@
 		@apply bg-body;
 	}
 }
+
+@layer components {
+	.btn-blue {
+		@apply flex justify-center items-center h-fit border border-blue rounded-xl gap-1 px-2;
+	}
+	.btn-white {
+		@apply flex justify-center items-center h-fit border border-gray rounded-xl gap-1 px-2;
+	}
+}
