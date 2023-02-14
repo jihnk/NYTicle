@@ -1,18 +1,16 @@
-import { useSelector } from "react-redux";
+import { useRecoilValue } from "recoil";
 import ArticleList from "../components/article/ArticleList";
 import Filter from "../components/common/Filter";
 import Nav from "../components/common/Nav";
-import { Store } from "../types/store";
 import NoData from "../components/NoData";
+import { filterState, likeListState } from "../recoil/atom";
+import { ArticleType } from "../types/article";
 
 const Scrap = () => {
-	const { likeList } = useSelector((state: Store) => {
-		return state.like;
-	});
+	const likeList: ArticleType[] = useRecoilValue(likeListState);
 
-	const { scrap } = useSelector((state: Store) => {
-		return state.filter;
-	});
+	const filter = useRecoilValue(filterState);
+	const { scrap } = filter;
 
 	const filteredLikeList = scrap.headline
 		? likeList.filter((article) =>
@@ -26,7 +24,7 @@ const Scrap = () => {
 		<>
 			{filteredLikeList.length > 0 ? (
 				<>
-					<Filter />
+					<Filter filterData={scrap} />
 					<ArticleList articleList={likeList} />
 				</>
 			) : (

@@ -1,44 +1,38 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import moment from "moment";
+import { filterState } from "../../recoil/atom";
 
 import { ReactComponent as Calendar } from "../../assets/calendar.svg";
 import { COUNTRY_LIST } from "../../const";
 import CountryItem from "../Country";
 import Button from "./Button";
 import Portal from "./Portal";
-import {
-	editMainDate,
-	editMainHeadline,
-	editScrapDate,
-	editScrapHeadline,
-} from "../../redux/filterSlice";
-import { Store } from "../../types/store";
-import { getArticles, reset } from "../../redux/articleSlice";
-import { AppDispatch } from "../../redux/store";
-import { getQueryParams } from "../../utils";
+import usePath from "../../hooks/useLocation";
 
 const FilterModal = ({ handleClose }: { handleClose: () => void }) => {
-	const dispatch = useDispatch<AppDispatch>();
-	const location = useLocation();
-
-	const isHome = location.pathname === "/";
-	const { main, scrap } = useSelector((state: Store) => {
-		return state.filter;
-	});
+	const { isHome } = usePath();
+	const [filter, setFilter] = useRecoilState(filterState);
+	const { main, scrap } = filter;
+	const reset = useResetRecoilState(filterState);
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		isHome
-			? dispatch(editMainHeadline(e.target.value))
-			: dispatch(editScrapHeadline(e.target.value));
+			? setFilter({ ...filter, main: { ...main, headline: e.target.value } })
+			: setFilter({ ...filter, scrap: { ...scrap, headline: e.target.value } });
 	};
 
 	const onChangeDate = (date: Date) => {
 		isHome
-			? dispatch(editMainDate(moment(date).format("YYYY-MM-DD")))
-			: dispatch(editScrapDate(moment(date).format("YYYY-MM-DD")));
+			? setFilter({
+					...filter,
+					main: { ...main, pub_date: moment(date).format("YYYY-MM-DD") },
+			  })
+			: setFilter({
+					...filter,
+					scrap: { ...scrap, pub_date: moment(date).format("YYYY-MM-DD") },
+			  });
 	};
 
 	const onClick = () => {
@@ -48,8 +42,7 @@ const FilterModal = ({ handleClose }: { handleClose: () => void }) => {
 
 	const filterList = () => {
 		if (isHome) {
-			dispatch(reset());
-			dispatch(getArticles({ page: 1, fq: getQueryParams(main) }));
+			reset();
 		}
 	};
 

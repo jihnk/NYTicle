@@ -15,4 +15,12 @@
 	.btn-white {
 		@apply flex justify-center items-center h-fit border border-gray rounded-xl gap-1 px-2;
 	}
+
+	.filter-active {
+		@apply flex flex-none justify-center items-center w-fit border border-gray rounded-[16px] gap-1 px-2 py-0.5 bg-blue text-white;
+	}
+
+	.filter-unactive {
+		@apply flex flex-none justify-center items-center w-fit border border-gray rounded-[16px] gap-1 px-2 py-0.5;
+	}
 }

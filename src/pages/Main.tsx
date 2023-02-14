@@ -1,44 +1,53 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useInfiniteQuery } from "react-query";
+import { useRecoilValue } from "recoil";
+
+import { getArticleList } from "../api/article";
 import ArticleList from "../components/article/ArticleList";
 import Filter from "../components/common/Filter";
 import Nav from "../components/common/Nav";
 import Spinner from "../components/common/Spinner";
 import useIntersectionObserver from "../hooks/useInfiniteScroll";
-import { getArticles } from "../redux/articleSlice";
-import { AppDispatch } from "../redux/store";
-import { Store } from "../types/store";
+import { filterState } from "../recoil/atom";
 import { getQueryParams } from "../utils";
 
 const Main = () => {
-	const dispatch = useDispatch<AppDispatch>();
-	const [page, setPage] = useState(1);
-	const [isLoading, setIsLoading] = useState(false);
+	const filter = useRecoilValue(filterState);
+	const { main } = filter;
 
-	const { articleList, listCount, loading } = useSelector((state: Store) => {
-		return state.article;
-	});
+	const fetchArticles = async (pageParam: number) => {
+		const res = await getArticleList({
+			page: pageParam,
+			fq: getQueryParams(main),
+		});
+		const {
+			response: { docs },
+		} = res.data;
+		return { docs, nextPage: pageParam + 1 };
+	};
 
-	const { main } = useSelector((state: Store) => {
-		return state.filter;
-	});
+	const {
+		data,
+		error,
+		fetchNextPage,
+		hasNextPage,
+		isFetching,
+		isFetchingNextPage,
+		status,
+	} = useInfiniteQuery(
+		"articles",
+		({ pageParam = 1 }) => fetchArticles(pageParam),
+		{
+			getNextPageParam: (lastPage, pages) => lastPage.nextPage,
+		}
+	);
 
 	const onIntersect: IntersectionObserverCallback = async (
 		[entry],
 		observer
 	) => {
-		if (
-			entry.isIntersecting &&
-			!isLoading &&
-			listCount >= articleList.length &&
-			loading !== "failed" &&
-			loading !== "pending"
-		) {
+		if (entry.isIntersecting && !isFetching && hasNextPage) {
 			observer.unobserve(entry.target);
-			setIsLoading(true);
-			await dispatch(getArticles({ page, fq: getQueryParams(main) }));
-			setIsLoading(false);
-			setPage(page + 1);
+			await fetchNextPage();
 			observer.observe(entry.target);
 		}
 	};
@@ -47,12 +56,22 @@ const Main = () => {
 		onIntersect,
 	});
 
+	if (error) {
+		return <p>Error</p>;
+	}
+
 	return (
 		<>
-			<Filter />
-			<ArticleList articleList={articleList} />
-			{loading === "pending" && <Spinner />}
-			{!isLoading && <div ref={setTarget} className="w-full h-[300px]"></div>}
+			<Filter filterData={main} />
+			<div className="mt-5">
+				{data?.pages?.map((page, i) => (
+					<ArticleList key={i} articleList={page?.docs} />
+				))}
+			</div>
+			{status === "loading" || (isFetchingNextPage && <Spinner />)}
+			{status !== "loading" && status !== "error" && (
+				<div ref={setTarget} className="w-full h-[300px]"></div>
+			)}
 			<Nav />
 		</>
 	);

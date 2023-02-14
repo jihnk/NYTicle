@@ -1,24 +1,48 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { editMainCountry, editScrapCountry } from "../redux/filterSlice";
-import { AppDispatch } from "../redux/store";
-import { Store } from "../types/store";
+import { useRecoilState } from "recoil";
+import usePath from "../hooks/useLocation";
+import { filterState } from "../recoil/atom";
 
 interface CountryItemProps {
 	name: string;
 }
 
 const CountryItem = ({ name }: CountryItemProps) => {
-	const dispatch = useDispatch<AppDispatch>();
-	const location = useLocation();
-	const isHome = location.pathname === "/";
-
-	const { main, scrap } = useSelector((state: Store) => {
-		return state.filter;
-	});
+	const { isHome } = usePath();
+	const [filter, setFilter] = useRecoilState(filterState);
+	const { main, scrap } = filter;
 
 	const onClick = () => {
-		isHome ? dispatch(editMainCountry(name)) : dispatch(editScrapCountry(name));
+		if (isHome) {
+			if (!main.country.includes(name)) {
+				setFilter({
+					...filter,
+					main: { ...main, country: [...main.country, name] },
+				});
+			} else {
+				setFilter({
+					...filter,
+					main: {
+						...main,
+						country: [...main.country.filter((country) => country !== name)],
+					},
+				});
+			}
+		} else {
+			if (!scrap.country.includes(name)) {
+				setFilter({
+					...filter,
+					scrap: { ...scrap, country: [...scrap.country, name] },
+				});
+			} else {
+				setFilter({
+					...filter,
+					scrap: {
+						...scrap,
+						country: [...scrap.country.filter((country) => country !== name)],
+					},
+				});
+			}
+		}
 	};
 
 	return (
@@ -26,11 +50,11 @@ const CountryItem = ({ name }: CountryItemProps) => {
 			className={
 				isHome
 					? main.country.includes(name)
-						? "flex flex-none justify-center items-center w-fit border border-gray rounded-[16px] gap-1 px-2 py-0.5 bg-blue text-white"
-						: "flex flex-none justify-center items-center w-fit border border-gray rounded-[16px] gap-1 px-2 py-0.5"
+						? "filter-active"
+						: "filter-unactive"
 					: scrap.country.includes(name)
-					? "flex flex-none justify-center items-center w-fit border border-gray rounded-[16px] gap-1 px-2 py-0.5 bg-blue text-white"
-					: "flex flex-none justify-center items-center w-fit border border-gray rounded-[16px] gap-1 px-2 py-0.5"
+					? "filter-active"
+					: "filter-unactive"
 			}
 			onClick={onClick}
 		>

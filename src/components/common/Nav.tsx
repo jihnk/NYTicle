@@ -1,11 +1,11 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ReactComponent as Home } from "../../assets/home.svg";
 import { ReactComponent as Scrap } from "../../assets/scrap.svg";
+import usePath from "../../hooks/useLocation";
 
 const Nav = () => {
 	const navigation = useNavigate();
-	const location = useLocation();
-	const isHome = location.pathname === "/";
+	const { isHome } = usePath();
 
 	return (
 		<nav className="fixed bottom-0 flex justify-between bg-black w-full h-[85px] px-20 py-5 rounded-[30px]">

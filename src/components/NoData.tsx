@@ -1,15 +1,15 @@
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useResetRecoilState } from "recoil";
 import { ReactComponent as ScrapIcon } from "../assets/scrap.svg";
-import { reset } from "../redux/filterSlice";
+import { filterState } from "../recoil/atom";
 import Button from "./common/Button";
 
 const NoData = () => {
 	const navigation = useNavigate();
-	const dispatch = useDispatch();
+	const reset = useResetRecoilState(filterState);
 
 	const onClick = () => {
-		dispatch(reset());
+		reset();
 		navigation(`/`);
 	};
 
