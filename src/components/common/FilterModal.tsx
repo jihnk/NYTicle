@@ -35,17 +35,6 @@ const FilterModal = ({ handleClose }: { handleClose: () => void }) => {
 			  });
 	};
 
-	const onClick = () => {
-		filterList();
-		handleClose();
-	};
-
-	const filterList = () => {
-		if (isHome) {
-			reset();
-		}
-	};
-
 	return (
 		<Portal>
 			<div className="w-full rounded-[16px] p-5 bg-white z-50">
@@ -92,7 +81,7 @@ const FilterModal = ({ handleClose }: { handleClose: () => void }) => {
 							))}
 						</div>
 					</div>
-					<Button text="필터 적용하기" onClick={onClick} />
+					<Button text="필터 적용하기" onClick={handleClose} />
 				</div>
 			</div>
 		</Portal>
