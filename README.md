@@ -3,6 +3,8 @@
 - react
 - typescript
 - redux toolkit (+ redux-persist)
+- recoil, recoil persist
+- react query
 - axios
 - tailwindcss
 - moment
@@ -13,59 +15,7 @@
       npm i && npm start
 
 ### 파일 구조
-
-.
-├── App.test.tsx
-├── App.tsx
-├── api
-│   └── article.ts
-├── assets
-│   ├── calendar.svg
-│   ├── home.svg
-│   ├── scrap.svg
-│   ├── search.svg
-│   ├── star-fill.svg
-│   └── star.svg
-├── components
-│   ├── Country.tsx
-│   ├── NoData.tsx
-│   ├── article
-│   │   ├── Article.tsx
-│   │   └── ArticleList.tsx
-│   └── common
-│   ├── Button.tsx
-│   ├── Filter.tsx
-│   ├── FilterModal.tsx
-│   ├── Nav.tsx
-│   ├── Portal.tsx
-│   └── Spinner.tsx
-├── const.ts
-├── file.txt
-├── hooks
-│   ├── useInfiniteScroll.ts
-│   └── useModal.ts
-├── index.tsx
-├── pages
-│   ├── Main.tsx
-│   └── Scrap.tsx
-├── react-app-env.d.ts
-├── redux
-│   ├── articleSlice.ts
-│   ├── filterSlice.ts
-│   ├── likeItemSlice.ts
-│   ├── reducer.ts
-│   └── store.ts
-├── reportWebVitals.ts
-├── setupTests.ts
-├── styles
-│   └── globals.css
-├── types
-│   ├── article.ts
-│   ├── filter.ts
-│   └── store.ts
-└── utils.ts
-
-10 directories, 39 files
+ TODO
 
 ### 구현 내용
 
@@ -86,3 +36,8 @@
   - [x] 스크랩 필터 headline, pub_date 필터링 적용(filter), 국가는 ui만 구현
   - [x] 리스트 기사 클릭시 new york times의 기사 웹페이지로 리다이렉트
   - [x] 웹을 껐다 켜도 스크랩된 데이터 유지 - redux persist
+
+
+## TODO
+컴포넌트 정리
+스크랩 개선
